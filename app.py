@@ -8,7 +8,12 @@ ps = PorterStemmer()
 
 import spacy
 
-nlp = spacy.load("en_core_web_sm")
+# nlp = spacy.load("en_core_web_sm")
+try:
+    nlp = spacy.load("en_core_web_sm")
+except OSError:
+    import en_core_web_sm
+    nlp = en_core_web_sm.load()
 
 
 def transform_text(text):
@@ -51,5 +56,6 @@ if st.button("predict"):
         st.header("spam")
     else:
         st.header("not spam")
+
 
 
