@@ -9,11 +9,28 @@ ps = PorterStemmer()
 import spacy
 
 # nlp = spacy.load("en_core_web_sm")
-try:
-    nlp = spacy.load("en_core_web_sm")
-except OSError:
-    import en_core_web_sm
-    nlp = en_core_web_sm.load()
+# try:
+#     nlp = spacy.load("en_core_web_sm")
+# except OSError:
+#     import en_core_web_sm
+#     nlp = en_core_web_sm.load()
+
+import spacy, importlib, subprocess
+
+# Try to load spaCy English model; install inside container if missing
+def load_spacy_model():
+    try:
+        return spacy.load("en_core_web_sm")
+    except OSError:
+        subprocess.run(
+            ["python", "-m", "spacy", "download", "en_core_web_sm"],
+            check=True,
+        )
+        import en_core_web_sm
+        return en_core_web_sm.load()
+
+nlp = load_spacy_model()
+
 
 
 def transform_text(text):
@@ -56,6 +73,7 @@ if st.button("predict"):
         st.header("spam")
     else:
         st.header("not spam")
+
 
 
 
