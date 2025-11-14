@@ -1,11 +1,9 @@
-
 scikit-learn
 pandas
 streamlit
 numpy
 nltk
-
-spacy==3.7.1
+spacy==3.5.0  # older stable version
 
 
 
